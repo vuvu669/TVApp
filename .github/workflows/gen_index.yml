@@ -1,0 +1,36 @@
+name: Generate ModMod Index
+
+on:
+  push:
+    paths:
+      - "modmod/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Generate index.html
+        run: |
+          cd modmod
+          echo '<!DOCTYPE html>' > index.html
+          echo '<html><head><meta charset="utf-8"><title>TVS Mod Files</title>' >> index.html
+          echo '<style>body{font-family:sans-serif;background:#f4f4f4;margin:40px;font-size:25px;}a{display:block;padding:10px 0;color:#0078d7;text-decoration:none;}a:hover{color:#0050a0;}</style>' >> index.html
+          echo '</head><body><h2>📦 TVS Mod Files</h2>' >> index.html
+
+          for f in *; do
+            if [ -f "$f" ]; then
+              echo "<a href='https://raw.githubusercontent.com/vuvu669/TVApp/main/modmod/$f' download>$f</a>" >> index.html
+            fi
+          done
+
+          echo '<hr><p style="font-size:18px;color:gray;">Tự động cập nhật bởi GitHub Actions • TVS Mod</p></body></html>' >> index.html
+
+      - name: Commit and Push index.html
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add modmod/index.html
+          git commit -m "Auto update index.html for modmod" || echo "No changes"
+          git push
