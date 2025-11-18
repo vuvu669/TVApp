@@ -74,7 +74,7 @@
 </div>
 
 <script>
-  fetch("https://api.github.com/repos/vuvu669/TVApp/contents/data")
+  fetch("https://api.github.com/repos/vuvu669/TVApp/contents/modmod")
     .then(res => res.json())
     .then(files => {
       let list = document.getElementById("fileList");
@@ -84,7 +84,7 @@
 
         card.innerHTML = `
           <span class="file-name">${file.name}</span>
-          <a class="download-btn" href="https://raw.githubusercontent.com/vuvu669/TVApp/main/data/${file.name}" download>
+          <a class="download-btn" href="https://raw.githubusercontent.com/vuvu669/TVApp/main/modmod/${file.name}" download>
             Download
           </a>
         `;
